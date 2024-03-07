@@ -14,18 +14,22 @@ function App() {
   }
 
   const decrement = (id) => {
-    setCart(prev => {
-      const newCart = prev.map(e => ({ ...e }));
-      const itemIndex = newCart.findIndex(item => item.id == id)
-      if (itemIndex !== -1) {
-        if (newCart[itemIndex].amount == 1) {
-          newCart.splice(itemIndex, 1)
-        }
-        else newCart[itemIndex].amount = newCart[itemIndex].amount - 1;
+    const itemIndex = cart.findIndex(item => item.id == id)
+    if (itemIndex != -1) {
+      if (cart[itemIndex].amount == 1) {
+        deleteItem(id)
       }
-      return newCart
-    })
+      else {
+        setCart(prev => {
+          const newCart = prev.map(e => ({ ...e }));
+          newCart[itemIndex].amount = newCart[itemIndex].amount - 1;
+          return newCart
+        })
+      }
+    }
   }
+
+
   const increment = (id) => {
     setCart(prev => {
       const newCart = prev.map(e => ({ ...e }));
