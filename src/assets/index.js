@@ -1,0 +1,7 @@
+export { default as minus } from './minus.png'
+export { default as plus } from './plus.png'
+export { default as check } from './check.png'
+export { default as nike } from './nike.png'
+export { default as trash } from './trash.png'
+export { default as wave } from './wave-haikei.svg'
+export { default as blob } from './blob-haikei.svg'
