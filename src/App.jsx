@@ -18,11 +18,11 @@ function App() {
   }, [])
 
   const addToCart = (shoe) => {
-    if (cart.findIndex(item => item.id == shoe.id) == -1) setCart(prev => [...prev, { ...shoe, amount: 1 }])
+    if (cart.findIndex(item => item._id == shoe._id) == -1) setCart(prev => [...prev, { ...shoe, amount: 1 }])
   }
 
   const decrement = (id) => {
-    const itemIndex = cart.findIndex(item => item.id == id)
+    const itemIndex = cart.findIndex(item => item._id == id)
     if (itemIndex != -1) {
       if (cart[itemIndex].amount == 1) {
         deleteItem(id)
@@ -41,7 +41,7 @@ function App() {
   const increment = (id) => {
     setCart(prev => {
       const newCart = prev.map(e => ({ ...e }));
-      const itemIndex = newCart.findIndex(item => item.id == id)
+      const itemIndex = newCart.findIndex(item => item._id == id)
       if (itemIndex !== -1) {
         newCart[itemIndex].amount = newCart[itemIndex].amount + 1;
       }
@@ -54,7 +54,7 @@ function App() {
     if (itemElement) {
       itemElement.classList.add('removing');
       setTimeout(() => {
-        setCart(prev => prev.filter(item => item.id != id))
+        setCart(prev => prev.filter(item => item._id != id))
         itemElement.classList.remove('removing');
       }, 600)
     }
@@ -86,8 +86,8 @@ function App() {
                 <p className='product-desc'>{shoe.description}</p>
                 <div className='checkout'>
                   <p>${shoe.price}</p>
-                  <button className={`add-product-button ${cart.findIndex(item => item.id == shoe.id) == -1 ? '' : 'checked'}`} onClick={() => addToCart(shoe)}>
-                    {cart.findIndex(item => item.id == shoe.id) == -1 ? <span style={{ fontWeight: "bold" }}>ADD TO CART</span> : <img src={check} />}</button>
+                  <button className={`add-product-button ${cart.findIndex(item => item._id == shoe._id) == -1 ? '' : 'checked'}`} onClick={() => addToCart(shoe)}>
+                    {cart.findIndex(item => item._id == shoe._id) == -1 ? <span style={{ fontWeight: "bold" }}>ADD TO CART</span> : <img src={check} />}</button>
                 </div>
               </div>
             })}
@@ -105,7 +105,7 @@ function App() {
           </div>
           <div className='cart-container'>
             {cart.length == 0 ? <div>Your cart is empty.</div> : cart.map((c, index) => {
-              return <div key={index} className='cart-item' id={c.id}>
+              return <div key={index} className='cart-item' id={c._id}>
                 <div className='image-container' style={{ backgroundColor: c.color }}>
                   <img src={c.image} alt='shoe' />
                 </div>
@@ -114,15 +114,15 @@ function App() {
                   <p className='cart-item-price'>${c.price}</p>
                   <div className='cart-checkout'>
                     <div className='cart-item-counter'>
-                      <button onClick={() => decrement(c.id)}>
+                      <button onClick={() => decrement(c._id)}>
                         <img src={minus} />
                       </button>
                       <span>{c.amount}</span>
-                      <button onClick={() => increment(c.id)}>
+                      <button onClick={() => increment(c._id)}>
                         <img src={plus} />
                       </button>
                     </div>
-                    <button className='cart-item-delete' onClick={() => deleteItem(c.id)}>
+                    <button className='cart-item-delete' onClick={() => deleteItem(c._id)}>
                       <img src={trash} />
                     </button>
                   </div>
