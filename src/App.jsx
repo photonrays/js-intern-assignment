@@ -5,7 +5,7 @@ import { minus, nike, plus, trash, wave, check, blob } from "./assets/index"
 
 function App() {
   const [total, setTotal] = useState(0);
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cartItem')) || [])
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('myCart')) || [])
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -63,7 +63,7 @@ function App() {
   useEffect(() => {
     const newTotal = cart.reduce((acc, item) => acc + item.price * item.amount, 0);
     setTotal(Math.round(newTotal * 100) / 100)
-    localStorage.setItem('cartItem', JSON.stringify(cart))
+    localStorage.setItem('myCart', JSON.stringify(cart))
   }, [cart])
 
   return (
