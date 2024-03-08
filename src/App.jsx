@@ -1,6 +1,4 @@
-// import { useState } from 'react'
 import './App.css'
-import * as data from './data/shoes.json';
 import { useEffect, useState } from 'react';
 import { minus, nike, plus, trash, wave, check, blob } from "./assets/index"
 
@@ -8,6 +6,16 @@ import { minus, nike, plus, trash, wave, check, blob } from "./assets/index"
 function App() {
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cartItem')) || [])
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("https://js-intern-assignment-backend-f2rx.onrender.com/api/v1/products/")
+      const productData = await res.json();
+      setData(productData)
+    }
+    fetchData()
+  }, [])
 
   const addToCart = (shoe) => {
     if (cart.findIndex(item => item.id == shoe.id) == -1) setCart(prev => [...prev, { ...shoe, amount: 1 }])
@@ -69,7 +77,7 @@ function App() {
           <img src={blob} alt="blob" className='blob' />
           <h2 className='title'>Our products</h2>
           <div className='product-container'>
-            {data.shoes.map((shoe, index) => {
+            {data.map((shoe, index) => {
               return <div key={index}>
                 <div className='product-image' style={{ backgroundColor: shoe.color }}>
                   <img src={shoe.image} />
